@@ -39,3 +39,11 @@ $$
 $$
 
 where $\gamma$ represents the Euler-Mashceroni constant, $\gamma \approx 0.57721$
+
+## Modified Bessel function of the second kind
+
+Modified Bessel functions of the second kind are often used in non-relativistic expansions of Fermi-dirac integrals. With some simplification relevant to the work,
+
+$$
+K_2(z) \simeq \sqrt{\frac{\pi}{2z}}\sum_{n=0}^{\infty}\frac{\Gamma(5/2 + n)}{\Gamma(5/2 - n)n! (2z)^n}
+$$

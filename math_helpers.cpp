@@ -1,6 +1,9 @@
 #include <iostream>
 #include <complex>
 
+double euler_mascheroni = 0.57721;
+double pi = 3.1415926535; 
+
 std::complex<double> polylog(std::complex<double> s, std::complex<double> z){
     std::complex<double> result(0,0);
     int n = 1;
@@ -24,13 +27,13 @@ std::complex<double> polylog(std::complex<double> s, std::complex<double> z){
 
 std::complex<double> gamma_integrand(std::complex<double> t, std::complex<double> z) {
     if (std::abs(t) < 1e-10) {
-        std::cout << "Invalid value of t. Terminating computation" << std::endl;
+        std::cout << "Invalid value of t. Returning 0" << std::endl;
         return std::complex<double>(0, 0);
     }
     return std::pow(t, z - 1.0) * std::exp(-t);
 }
 
-std::complex<double> gamma(std::complex<double> z, double lower_limit = 0, double upper_limit = 1e5, double steps = 1e5) {
+std::complex<double> gamma(std::complex<double> z, double lower_limit = 1e-5, double upper_limit = 1e5, double steps = 1e5) {
     int num_steps = static_cast<int>(steps);
     double step_size = (upper_limit - lower_limit) / num_steps;
     std::complex<double> integral(0, 0);
@@ -38,6 +41,7 @@ std::complex<double> gamma(std::complex<double> z, double lower_limit = 0, doubl
 
     for (int i = 1; i < num_steps; i++) {
         double t = lower_limit + i * step_size;
+        // std::cout << "t = " << t;
         integral += gamma_integrand(std::complex<double>(t, 0), z);
     }
 
@@ -46,11 +50,6 @@ std::complex<double> gamma(std::complex<double> z, double lower_limit = 0, doubl
     return integral;
 }
 
-
-#include <iostream>
-#include <complex>
-#include <cmath>
-
 std::complex<double> digamma_integrand(std::complex<double> x, std::complex<double> z) {
     if (std::abs(std::real(x) - 1.0) < 1e-10 || std::abs(std::real(x)) < 1e-10) {
         std::cout << "Invalid value of x. Skipping computation for x = " << x << std::endl;
@@ -58,8 +57,6 @@ std::complex<double> digamma_integrand(std::complex<double> x, std::complex<doub
     }
     return (1.0 - std::pow(x, z - 1.0)) / (1.0 - x);
 }
-
-double euler_mascheroni = 0.57721; // Euler-Mascheroni constant (corrected value)
 
 std::complex<double> digamma(std::complex<double> z, double steps = 1e6) {
     double lower_limit = 0;
@@ -79,3 +76,16 @@ std::complex<double> digamma(std::complex<double> z, double steps = 1e6) {
     integral *= step_size;
     return integral - std::complex<double>(euler_mascheroni, 0);
 }
+
+std::complex<double> bessel_function_of_the_second_kind(std::complex<double> z, int max_terms = 100, double tolerance = 1e-10) {
+    std::complex<double> prefactor(0,0);
+    std::complex<double> result(0,0);
+    prefactor = (std::complex<double>(2,0)/std::pow(z,2)) - std::complex<double>(0.5,0);
+    for (int i = 1; i <= max_terms; i++){
+        std::complex<double> factorial = std::pow(gamma(std::complex<double>(i+1,0))*gamma(std::complex<double>(i+3,0)),-1);
+        std::complex<double> term2 = std::pow(z/std::complex<double>(2.0,0), std::complex<double>(2.0*i+2.0, 0));
+        std::complex<double> term3 = (digamma(std::complex<double>(i+1, 0)) + digamma(std::complex<double>(i+3, 0))/std::complex<double>(2.0,0)) - std::log(z/std::complex<double>(2.0,0));
+        std::complex<double> answer = factorial * term2 * term3;
+        result+=answer;
+    }
+    return result;
