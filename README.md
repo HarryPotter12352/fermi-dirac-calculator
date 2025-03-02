@@ -23,3 +23,19 @@ The gamma function is a continuation of the factorial function to complex number
 $$
 \Gamma(z) = \int_{0}^{\infty}t^{z-1}e^{-t}dt
 $$
+
+## Digamma function
+
+The digamma function appears multiple times in the relativistic expansion of Fermi-Dirac integrals. It is commonly expressed as
+
+$$
+\psi(z) = \frac{d}{dz}\ln \Gamma(z) = \frac{\Gamma'(z)}{\Gamma(z)}
+$$
+
+I use the integral representation to allow for easier computation.
+
+$$
+\psi(z) = -\gamma + \int_{0}^{1}\frac{1-x^{z-1}}{1-x}dx
+$$
+
+where $\gamma$ represents the Euler-Mashceroni constant, $\gamma \approx 0.57721$
