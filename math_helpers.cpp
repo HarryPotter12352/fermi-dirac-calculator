@@ -77,7 +77,7 @@ std::complex<double> digamma(std::complex<double> z, double steps = 1e6) {
     return integral - std::complex<double>(euler_mascheroni, 0);
 }
 
-std::complex<double> bessel_function_of_the_second_kind(std::complex<double> z, int max_terms = 100, double tolerance = 1e-10) {
+std::complex<double> modified_bessel_function_of_the_second_kind(std::complex<double> z, int max_terms = 1000, double tolerance = 1e-10) {
     std::complex<double> prefactor(0,0);
     std::complex<double> result(0,0);
     prefactor = (std::complex<double>(2,0)/std::pow(z,2)) - std::complex<double>(0.5,0);

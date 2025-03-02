@@ -48,3 +48,9 @@ Modified Bessel functions of the second kind are often used in non-relativistic 
 $$
 K_2(z) \simeq \sqrt{\frac{\pi}{2z}}\sum_{n=0}^{\infty}\frac{\Gamma(5/2 + n)}{\Gamma(5/2 - n)n! (2z)^n}
 $$
+
+A more exact form of the modified Bessel function (the one, in fact, used for computation) is given by
+
+$$
+K_2(z) = \frac{2}{z^2} - \frac{1}{z} + \sum_{n=0}^{\infty}\frac{1}{n!(n+2)!} \left(\frac{z}{2}\right)^{2n+2} \left[\frac{\psi(n+1) + \psi(n+3)}{2} - ln \frac{z}{2}\right]
+$$
