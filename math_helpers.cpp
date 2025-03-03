@@ -25,6 +25,27 @@ std::complex<double> polylog(std::complex<double> s, std::complex<double> z){
     }
 }
 
+std::complex<double> polylog_derivative(std::complex<double> s, std::complex<double> z){
+    std::complex<double> result(0,0);
+    int n = 1;
+    while (n < 1000){
+        std::complex<double> term(0,0);
+        term = (pow(z,n)/pow(n,s))*log(n);
+        if(std::isnan(real(term))||std::isnan(imag(term))||std::isnan(real(result))||std::isnan(imag(result))){
+            std::cout << "Encountered NaN during computation of polylogarithm. Terminating computation of polylogarithm" << std::endl;
+            break;
+        }
+        else if (std::abs(term) < 1e-10){
+            std::cout << "Encountred convergence barrier during computation of polylogarithm. Terminating computation of polylogarithm";
+        }
+        else{
+            result+=term;
+            n++;
+        }
+        return -1.0*result;
+    }
+}
+
 std::complex<double> gamma_integrand(std::complex<double> t, std::complex<double> z) {
     if (std::abs(t) < 1e-10) {
         std::cout << "Invalid value of t. Returning 0" << std::endl;
@@ -41,7 +62,6 @@ std::complex<double> gamma(std::complex<double> z, double lower_limit = 1e-5, do
 
     for (int i = 1; i < num_steps; i++) {
         double t = lower_limit + i * step_size;
-        // std::cout << "t = " << t;
         integral += gamma_integrand(std::complex<double>(t, 0), z);
     }
 

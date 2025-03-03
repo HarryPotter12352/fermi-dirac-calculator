@@ -17,6 +17,14 @@ $$
 
 The polylogarithm is defined for all complex orders $s$ and all complex arguments where $|z| < 1$.
 
+## Derivative of the polylogarithm
+
+The derivative of the polylogarithm is simple, and is given by
+
+$$
+\frac{d}{ds} Li_s(z) = \sum_{n=1}^{\infty} \frac{\partial}{\partial s} \frac{z^n}{n^s} = -\sum_{n=1}^{\infty} \frac{z^n}{n^s}\ln(n)
+$$
+
 ## Gamma function
 
 The gamma function is a continuation of the factorial function to complex numbers. For any complex number $z$ with $\mathcal{R}(z) > 0$, the gamma function is defined as
